@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>ishop</title>
+    <link rel="stylesheet" href="{% static 'main.css'%}">
+</head>
+<body>
+<h1>iShop</h1>
+<img src="{% static 'db.jpeg' %}"  width="400" align= "right">
+{% for product in products %}
+<div>
+    <h2>{{product.name }}</h2>
+    <p>{{ product.desc }}</p>
+    <p><strong>{{ product.cost }}</strong></p>
+</div>
+{% endfor %}
+</body>
+</html>
