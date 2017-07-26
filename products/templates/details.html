@@ -2,5 +2,17 @@
 {% block main %}
 <h2>{{ product.name }} </h2>
 <p>{{ product.desc }}</p>
-<p>{{ product.cost }}</p>
+    <p><strong>{{ product.cost }}</strong></p>
+<hr>
+{% for comment in product.comment_set.all %}
+<div>
+<strong>{{ comment.author }} ({{ comment.date }}) </strong> {{comment.body}}
+</div>
+{% endfor %}
+    <form method="post">
+    {{ form.as_p }}
+        {% csrf_token %}
+    <input type="submit" value="Ok">
+    </form>
+
 {% endblock %}

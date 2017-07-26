@@ -1,0 +1,17 @@
+{% spaceless %}
+<p>
+    {% if objects.number > 1 %}
+    <a href="?p=1">&lt;&lt;</a>
+    {% endif %}
+    {% if objects.has_previous %}
+    <a href="?p={{ objects.previous_page_number }}">&lt;</a>
+    {% endif %}
+    Page {{ objects.number }} of  {{ objects.paginator.num_pages }}
+    {% if objects.has_next %}
+    <a href="?p={{ objects.next_page_number }}">&gt;</a>
+    {% endif %}
+    {% if objects.number < objects.paginator.num_pages %}
+    <a href="?p={{ objects.paginator.num_pages }}">&gt;&gt;</a>
+    {% endif %}
+</p>
+{% endspaceless %}

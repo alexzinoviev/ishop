@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls.base import reverse
 
 # Create your models here.
 # каждый класс соответствует таблицам базы данных
@@ -13,7 +14,11 @@ class ProductManager(models.Manager):
 class AllCatsManager(models.Manager):
     pass
 
+class Brand(models.Model):
+    title = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.title
 
 class Product(models.Model):
     name = models.CharField('Название', help_text="Здесь введите название товара", max_length=30)
@@ -21,6 +26,7 @@ class Product(models.Model):
     cost = models.FloatField('Цена')
     slug = models.SlugField(max_length=50)
     active = models.BooleanField('Активный', default=False)
+    brand = models.ForeignKey(Brand) #ключ на таблицу Brand - Brand как отдельный класс
 
     class Meta:
         verbose_name = 'Товар'
@@ -34,6 +40,12 @@ class Product(models.Model):
 
     all_cats = AllCatsManager()
     objects = ProductManager()
+
+    def get_absolute_url(self):
+        return reverse('details', args=[self.slug])
+
+# каждый класс - это новая таблица в базе
+
 
 class Notebook(models.Model):
     price = models.PositiveIntegerField()

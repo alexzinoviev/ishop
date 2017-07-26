@@ -7,15 +7,31 @@
 </head>
 <body>
 <h1>iShop</h1>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{{ comments_count }}
+<p>{% lorem 2 %}</p>
 {% block main %}
 <img src="{% static 'db.jpeg' %}"  width="400" align= "right">
 {% for product in products %}
-<div>
-    <h2><a href ="/details/{{ product.pk }}">{{ product.name }}</h2>
-    <p>{{ product.desc }}</p>
+<div style="background-color: {% cycle '#AAFFFF' '#FFAAFF' %}">
+    <h2><a href="{{product.get_absolute_url}}">{{ forloop.counter }}.{{ product.name }}</a></h2>
+    <p>{{ product.desc|truncatewords:3 }}</p>
     <p><strong>{{ product.cost }}</strong></p>
+        {# <p><a href="{% url 'edit' products.slug %}">Edit</a></p> #}
 </div>
 {% endfor %}
+{% include 'paging.html' with objects=products  %}
 {% endblock %}
 </body>
 </html>
