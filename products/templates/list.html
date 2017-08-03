@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% block main %}
+{% for product in object_list %}
+<div style="background-color: {% cycle '#AAFFFF' '#FFAAFF' %}">
+    <h2><a href="{{product.get_absolute_url}}">{{forloop.counter}}.{{product.name}}</a></h2>
+    <p>{{ product.desc|truncatewords:3 }}</p>
+    <p><strong>{{ product.cost }}</strong></p>
+    <p><a href="{% url 'products:edit' product.slug %}">Edit</a></p>
+</div>
+{% empty %}
+<p>OOps! There are no products here!</p>
+{% endfor %}
+{% include 'paging.html' with objects=page_obj  %}
+{% endblock %}

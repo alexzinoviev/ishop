@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from products.views import index, details, edit
+from accounts.views import log_in, log_out
 
 urlpatterns = [
-    url(r'^products/', include("products.urls")), # подключаем url из другого файла
+    url(r'^$', log_in, name= 'login'),
+    url(r'^logout$', log_out, name='logout'),
+    url(r'^products/', include("products.urls", namespace='products')), # подключаем url из другого файла
     url(r'^admin/', admin.site.urls),
 ]

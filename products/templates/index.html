@@ -19,19 +19,26 @@
 </ul>
 {% endif %}
 
+
+<p>{{ user }}, <a href="{% url 'logout' %}">Logout</a></p>
+
 {{ comments_count }}
 <p>{% lorem 2 %}</p>
+
 {% block main %}
 <img src="{% static 'db.jpeg' %}"  width="400" align= "right">
 {% for product in products %}
 <div style="background-color: {% cycle '#AAFFFF' '#FFAAFF' %}">
-    <h2><a href="{{product.get_absolute_url}}">{{ forloop.counter }}.{{ product.name }}</a></h2>
+    <h2><a href="{{product.get_absolute_url}}">{{forloop.counter}}.{{product.name}}</a></h2>
     <p>{{ product.desc|truncatewords:3 }}</p>
     <p><strong>{{ product.cost }}</strong></p>
-        {# <p><a href="{% url 'edit' products.slug %}">Edit</a></p> #}
+    <p><a href="{% url 'products:edit' product.slug %}">Edit</a></p>
 </div>
+{% empty %}
+<p>OOps! There are no products here!</p>
 {% endfor %}
 {% include 'paging.html' with objects=products  %}
 {% endblock %}
+
 </body>
 </html>

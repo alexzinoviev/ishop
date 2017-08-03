@@ -42,7 +42,7 @@ class Product(models.Model):
     objects = ProductManager()
 
     def get_absolute_url(self):
-        return reverse('details', args=[self.slug])
+        return reverse('products:details', args=[self.slug])
 
 # каждый класс - это новая таблица в базе
 

@@ -129,7 +129,7 @@ STATICFILES_DIRS = [
 
 ITEMS_ON_PAGE = 3
 
-AUTH_USER_MODEL = 'accounts.Users'
+AUTH_USER_MODEL = 'accounts.User'
 
 #admin user and pass
 # password QwErTy1\

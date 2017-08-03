@@ -9,16 +9,19 @@ from comments.models import Comment
 from .forms import ProductForm
 from comments.views import get_comments_quantity
 from django.urls.base import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+@login_required(login_url='login')
 def index(request):
     try:
-        page = (request.GET.get('p',1))
+       # page = (request.GET.get('p',1))
         products = Paginator(
             Product.objects.order_by('name').all(),
             settings.ITEMS_ON_PAGE
         ).page(
-            page
+            request.GET.get('p', 1)
         )
     except (EmptyPage, PageNotAnInteger):
         raise Http404
@@ -29,6 +32,7 @@ def index(request):
                       'comments_count': get_comments_quantity(request)
                   })
 
+@login_required(login_url='login')
 def details(request, slug):
     product = get_object_or_404(Product, slug = slug)
     form = CommentForm()
@@ -36,7 +40,7 @@ def details(request, slug):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = Comment(
-                author = form.cleaned_data['author'],
+                author = request.user,
                 body = form.cleaned_data['body'],
                 product=product
             )
@@ -49,7 +53,7 @@ def details(request, slug):
          'form': form, # на страницу деталей передали форму камментов
          }
     )
-
+@login_required(login_url='login')
 def edit(request, slug):
     product = get_object_or_404(Product, slug = slug)
     form = ProductForm(instance=product)

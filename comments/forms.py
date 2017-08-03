@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 # логика работы с формой
 
 class CommentForm(forms.Form):
-    author = forms.CharField()
+    #author = forms.CharField()
     body = forms.CharField(widget=forms.Textarea())
 
     def clean_body(self):
@@ -13,9 +13,9 @@ class CommentForm(forms.Form):
             raise ValidationError("Body shouldn't contain profanity")
         return self.cleaned_data['body']
 
-    def clean(self):
-        if self.cleaned_data['author'] == self.cleaned_data.get('body', ''):
-            raise ValidationError("Name can't be the same with body text")
-        return self.cleaned_data
+    # def clean(self):
+        # if self.cleaned_data['author'] == self.cleaned_data.get('body', ''):
+        #     raise ValidationError("Name can't be the same with body text")
+        # return self.cleaned_data
 
 
